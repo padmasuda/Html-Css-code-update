@@ -1,15 +1,31 @@
-const express = require("express");
-const pool = require("./db");
+const express = require('express');
+const mongoose = require('./database'); // Ensure this points to your database connection module
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
+// Define Expense model with appropriate schema
+const Expense = mongoose.model('Expense', new mongoose.Schema({
+  description: {
+    type: String,
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  }
+}));
+
 // Get all expenses
 app.get("/expenses", async (req, res) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM expenses");
-    res.status(200).json(rows);
+    const expenses = await Expense.find();
+    res.status(200).json(expenses);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -30,12 +46,14 @@ app.post("/expenses", async (req, res) => {
       return res.status(400).send("Invalid date format.");
     }
 
-    const result = await pool.query(
-      "INSERT INTO expenses (description, amount, date) VALUES ($1, $2, $3) RETURNING *",
-      [description, amount, parsedDate]
-    );
+    const newExpense = new Expense({
+      description,
+      amount,
+      date: parsedDate
+    });
 
-    res.status(201).json(result.rows[0]);
+    await newExpense.save();
+    res.status(201).json(newExpense);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -45,28 +63,23 @@ app.post("/expenses", async (req, res) => {
 // Update an expense
 app.put("/expenses/:id", async (req, res) => {
   try {
-    const { id } = req.params;
     const { description, amount, date } = req.body;
 
-    if (!description || !amount || !date) {
-      return res.status(400).send("Description, amount, and date are required.");
+    if (date) {
+      const parsedDate = new Date(date);
+      if (isNaN(parsedDate.getTime())) {
+        return res.status(400).send("Invalid date format.");
+      }
+      req.body.date = parsedDate;
     }
 
-    const parsedDate = new Date(date);
-    if (isNaN(parsedDate.getTime())) {
-      return res.status(400).send("Invalid date format.");
-    }
+    const updatedExpense = await Expense.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-    const result = await pool.query(
-      "UPDATE expenses SET description = $1, amount = $2, date = $3 WHERE id = $4 RETURNING *",
-      [description, amount, parsedDate, id]
-    );
-
-    if (result.rows.length === 0) {
+    if (!updatedExpense) {
       return res.status(404).send("Expense not found.");
     }
 
-    res.status(200).json(result.rows[0]);
+    res.status(200).json(updatedExpense);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -76,10 +89,9 @@ app.put("/expenses/:id", async (req, res) => {
 // Delete an expense
 app.delete("/expenses/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await pool.query("DELETE FROM expenses WHERE id = $1", [id]);
+    const result = await Expense.findByIdAndDelete(req.params.id);
 
-    if (result.rowCount === 0) {
+    if (!result) {
       return res.status(404).send("Expense not found.");
     }
 
