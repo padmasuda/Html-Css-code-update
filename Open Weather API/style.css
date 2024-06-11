@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+#weatherDisplay {
+    margin-top: 20px;
+}
+.weather{
+    background-color: #000080;
+    color: white;
+}
