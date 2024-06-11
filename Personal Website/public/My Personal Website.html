@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal Profile Page of Sanjay">
+    <title>Padma Profile</title>
+    <link rel="icon" href="user.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="dark-mode-toggle" class="dark-mode-toggle">
+        <i class="fas fa-sun"></i>
+    </div>
+    <header>
+        <h1>This is Padma, a <span class="about-me"></span></h1>
+        <p>Welcome to My World !</p>
+        <div class="header-content">
+            <div class="header-left">
+                <a href="" class="name">Padma C</a>
+                <a href="UI UX Designer Resume.pdf" class="resume-button uiux-designer" download>UI UX Designer Resume</a>
+                <a href="Full Stack Web Developer Resume.pdf" class="resume-button full-stack-web-developer" download>Full Stack Web Developer Resume</a>
+            </div>
+            <div class="header-right">
+                <a href="#about-me" class="about">About </a>
+                <a href="#programming-languages" class="about">Programming Language<a>
+                <a href="#My-Projects" class="about">My Projects<a>   
+                <a href="#Contact" class="contact">Contact</a>
+                <a href="#" id="logout-button" class="contact">Logout</a> <!-- Logout button -->
+            </div>
+        </div>
+    </header>
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const logoutButton = document.getElementById('logout-button');
+
+    logoutButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                alert('Successfully logged out');
+                window.location.href = '/index.html'; // Redirect to the login page
+            } else {
+                alert('Failed to log out');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while logging out');
+        }
+    });
+});
+   </script>
+
+
+    <section id="about-me">
+        <h2>About Me</h2>
+        <p>Hello! I’m Padma, and here’s a little Info about Me.</p>
+        <img src="padma.webp" alt="padma pic">
+    </section>
+    <hr>
+
+    <section id="technical-skills">
+        <h2>My Technical Skills</h2>
+        <div class="skills-list">
+            <ul class="skills-list">
+                <li>Web Development</li>
+                <li>Web Design</li>
+                <li>Graphic Design</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="horizontal-scroll">
+        <div class="icon-container">
+            <img src="icon/1.png" alt="Icon 1">
+            <img src="icon/2.png" alt="Icon 2">
+            <img src="icon/3.png" alt="Icon 3">
+            <img src="icon/4.png" alt="Icon 4">
+            <img src="icon/5.png" alt="Icon 5">
+            <img src="icon/6.webp" alt="Icon 6">
+            <img src="icon/7.webp" alt="Icon 7">
+            <img src="icon/8.svg" alt="Icon 8">
+            <img src="icon/9.png" alt="Icon 9">
+            <img src="icon/10.png" alt="Icon 10">
+            <img src="icon/11.webp" alt="Icon 11">
+            <img src="icon/12.png" alt="Icon 12">
+            <img src="icon/13.png" alt="Icon 13">
+            <img src="icon/14.png" alt="Icon 14">
+            <img src="icon/15.png" alt="Icon 15">
+            <img src="icon/16.png" alt="Icon 16">
+            <img src="icon/17.png" alt="Icon 17">
+            <img src="icon/18.webp" alt="Icon 18">
+            <img src="icon/19.webp" alt="Icon 19">
+            <img src="icon/20.svg" alt="Icon 20">
+            <img src="icon/21.png" alt="Icon 21">
+            <img src="icon/22.png" alt="Icon 22">
+            <img src="icon/23.webp" alt="Icon 23">
+            <img src="icon/24.png" alt="Icon 24">
+        </div>
+    </section>
+    <hr>
+
+    <section id="programming-languages">
+        <h2>Programming Languages</h2>
+        <div class="skill">
+            <p>Html</p>
+            <div class="progress-bar" data-progress="80"></div>
+        </div>
+        <div class="skill">
+            <p>Css</p>
+            <div class="progress-bar" data-progress="90"></div>
+        </div>
+        <div class="skill">
+            <p>Javascript</p>
+            <div class="progress-bar" data-progress="70"></div>
+        </div>
+        <h2>UI UX Design Tools</h2>
+        <div class="skill">
+            <p>Figma</p>
+            <div class="progress-bar" data-progress="80"></div>
+        </div>
+        <div class="skill">
+            <p>Adobe Xd</p>
+            <div class="progress-bar" data-progress="90"></div>
+        </div>
+        <div class="skill">
+            <p>Adobe Photoshop</p>
+            <div class="progress-bar" data-progress="70"></div>
+        </div>
+        <div class="skill">
+            <p>Adobe Illustrator</p>
+            <div class="progress-bar" data-progress="60"></div>
+        </div>
+    </section>
+    <hr>    
+
+    <section id="My-Projects">
+        <h2>My Projects</h2>
+        <p>Take a look at some of my works.</p>
+        <section id="projects">
+            <div class="project-thumbnail">
+                <div class="thumbnail-content">
+                    <img src="webdeveloper.jpg" alt="Project 1">
+                    <h3>Full Stack Web Development Projects</h3>
+                    <p>Please check github link for full stack web development projects</p>
+                    <a href="https://github.com/padmasuda/Html-Css-code-update" class="btn">Know More</a>
+                </div>
+                </div>
+            <div class="project-thumbnail">
+                <div class="thumbnail-content">
+                    <img src="Webdesign.jpg" alt="Project 2">
+                    <h3>Career Planning</h3>
+                    <p>Career Planning Mobile App UI Designs Using Figma</p>
+                    <a href="https://www.behance.net/gallery/182139005/Career-Planning-Mobile-App-UI-Designs" class="btn">Know More</a>
+                </div>
+            </div>
+            <div class="project-thumbnail">
+                <div class="thumbnail-content">
+                    <img src="Graphicdesign.jpg" alt="Project 4">
+                    <h3>Website Design</h3>
+                    <p>Website Design for career portal mobile version using Adobe Xd</p>
+                    <a href="https://www.behance.net/gallery/182988733/Website-Design-for-Career-Portal-Mobile-version" class="btn">Know More</a>
+                </div>
+            </div>
+        </section>                        
+    </section>
+    <hr>      
+    
+    <section id="Contact">
+        <h2>Contact Me</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your Name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email">
+            </div>
+    
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" placeholder="Your Message"></textarea>
+            </div>
+    
+            <button type="submit">Send Message</button>                
+        </form>
+    </section>
+    <hr>
+
+    <section id="Contact-Info">
+        <h2>Contact Information</h2>
+        <p>Let's connect!</p>
+        <a href="mailto:cpadma062@gmail.com" class="icon-link email-icon"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/padma-c-177b6128/" class="icon-link linkedin-icon"><i class="fab fa-linkedin"></i></a><br><br><br>   
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Padma</p>
+        </footer> 
+    </head>
+    </html>     

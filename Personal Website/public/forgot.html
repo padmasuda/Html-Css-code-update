@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8"> 
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="password.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="password">
+            <div class="content">
+                <img src="images/Forgot_Password.jpeg">
+            </div>
+            <div class="forgotpasswordform">
+                <h1>Forgot Password</h1>
+                <form id="forgotpassword-form">
+                    <div class="tbox">
+                        <i class="fa fa-envelope"></i><input type="email" id="forgotpassword-email" placeholder="Email">
+                    </div>
+                    <div class="tbox">
+                        <i class="fa fa-lock"></i><input type="password" id="forgotpassword-password" placeholder="Password">
+                    </div>
+                    <div class="tbox">
+                        <i class="fa fa-lock"></i><input type="password" id="forgotpassword-verify-password" placeholder="Verify Password">
+                    </div>
+                    <button type="button" class="btn" onclick="forgotPassword(event)">Forgot Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function forgotPassword(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('forgotpassword-email').value;
+            const password = document.getElementById('forgotpassword-password').value;
+            const verifyPassword = document.getElementById('forgotpassword-verify-password').value;
+
+            if (password !== verifyPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const response = await fetch('/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                alert('Password updated successfully!');
+                window.location.href = 'index.html';
+            } else {
+                alert('Failed to update password.');
+            }
+        }
+    </script>
+</body> 
+</html>
